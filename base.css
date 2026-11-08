@@ -1,0 +1,159 @@
+/* PANAH (پناه) ui-core — the base look: palette, font, sizes, a 360–440 px column (redesign 07.11, after Figma).
+   Logical properties only (margin-inline-start, inset-inline…): dir="ltr" flips the layout by itself. */
+
+@font-face {
+  font-family: 'Vazirmatn';
+  src: url('../vendor/vazirmatn/Vazirmatn-Variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* — PANAH palette (07.11 redesign): one set for residents and admins. Text contrast ≥ 4.5:1 on its background. — */
+  --c-brand: #F04A0C;         /* brand orange: icons, rings, stripes, the logo */
+  --c-brand-600: #D4400C;     /* fills with white text (4.6:1): primary buttons, the active menu pill */
+  --c-brand-700: #B23509;     /* brand text and icons on light backgrounds (6.2:1 on white), pressed fill */
+  --c-brand-50: #FFF3EE;      /* soft brand tint: selected tile, icon circles */
+  --c-brand-100: #FFE3D7;     /* brand tint borders */
+  --c-ink: #1F2430;           /* headings, header bars (15.6:1 on white) */
+  --c-ink-2: #474D5C;         /* body text (8.3:1) */
+  --c-ink-3: #656C7B;         /* secondary text (5.2:1 on white, 4.9:1 on the screen background) */
+  --c-screen: #F7F6F4;        /* warm light screen background */
+  --c-surface: #FFFFFF;       /* cards, fields, bars */
+  --c-sunken: #F1EFEC;        /* inset strips inside cards, segmented controls */
+  --c-danger-ink: #B42318;    /* red text on light backgrounds */
+  --c-danger-soft: #FEF0EE;
+  --c-danger-line: #F9CFC9;
+  --c-warn-ink: #8A3B0C;      /* amber text on light backgrounds */
+  --c-warn-soft: #FFF6E5;
+  --c-warn-line: #FADDA4;
+  --c-safe: #16A34A;          /* "safe" stripe and dots */
+  --c-safe-600: #15803D;      /* green fills with white text (5.0:1) */
+  --c-safe-soft: #EDFAF2;
+  --c-safe-line: #C4EBD2;
+  --c-info: #2563EB;          /* information — used sparingly */
+  --c-info-ink: #1D4ED8;
+  --c-info-soft: #EFF4FF;
+  --c-info-line: #D2E0FC;
+
+  /* — the earlier names, mapped onto the palette (screens use them) — */
+  --c-accent: var(--c-brand-600);
+  --c-accent-admin: var(--c-brand-600);   /* admins share the resident's orange */
+  --c-accent-soft: var(--c-brand-50);
+  --c-purple: var(--c-brand-600);         /* «تأیید» (04) — now the brand button */
+  --c-purple-soft: var(--c-brand-50);
+  --c-green: var(--c-safe);
+  --c-green-ink: var(--c-safe-600);
+  --c-green-soft: var(--c-safe-soft);
+  --c-warn: #F59E0B;          /* amber: warnings */
+  --c-danger: #D92D20;        /* red: danger (4.8:1 with white text) */
+  --c-tab: var(--c-brand-600);
+  --c-gray-card: #E4E1DC;
+  --c-red: #D92D20;           /* counters and badges */
+  --c-sos: #D92D20;
+  --c-req: #D92D20;           /* "*" of required fields */
+  --c-pink: var(--c-danger-soft);
+  --c-pink-2: var(--c-brand-50);
+  --c-pink-line: var(--c-danger-line);
+  --c-light: var(--c-sunken);
+  --c-bubble: var(--c-brand-50);          /* the resident's own chat bubble */
+  --c-bubble-line: var(--c-brand-100);
+  --c-blue: var(--c-info-ink);
+  --c-blue-soft: var(--c-info-soft);
+  --c-bg: var(--c-screen);    /* screen background */
+  --c-page: #E9E6E1;          /* the area around the column on a wide screen */
+  --c-text: var(--c-ink);
+  --c-text-2: var(--c-ink-2);
+  --c-text-3: var(--c-ink-3);
+  --c-hint: #6E7482;          /* placeholder text in fields (4.7:1) */
+  --c-line: #ECE9E4;          /* card borders, dividers */
+  --c-line-2: #D9D5CE;        /* borders of fields and outline buttons */
+  --c-nav-line: var(--c-line);
+
+  /* current accent: the same orange on resident and admin screens */
+  --accent: var(--c-accent);
+
+  /* — font and sizes: one scale (px), weights 400 / 500 / 600 / 700 / 800 — */
+  --font: 'Vazirmatn', system-ui, 'Segoe UI', Tahoma, sans-serif;
+  --fs-xs: 12px; --fs-sm: 13px; --fs-md: 15px; --fs-lg: 17px; --fs-xl: 20px; --fs-2xl: 24px; --fs-3xl: 28px;
+  --fw-regular: 400; --fw-medium: 500; --fw-semi: 600; --fw-bold: 700; --fw-black: 800;
+  --r-sm: 8px; --r-md: 12px; --r-lg: 16px; --r-xl: 20px; --r-pill: 999px;
+  --sh-1: 0 1px 2px rgba(31, 36, 48, .05), 0 2px 8px rgba(31, 36, 48, .05);
+  --sh-2: 0 4px 12px rgba(31, 36, 48, .07), 0 12px 32px rgba(31, 36, 48, .08);
+  --sh-banner: 0 6px 20px rgba(31, 36, 48, .08);
+  --sh-brand: 0 6px 16px rgba(212, 64, 12, .26);
+  --ring: 0 0 0 3px rgba(240, 74, 12, .28);  /* focus ring of fields and buttons */
+  --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 20px; --sp-6: 24px; --sp-8: 32px;
+  --pad-x: clamp(16px, 5vw, 24px); /* screen margins */
+  --app-max: 440px;
+  --tabbar-h: 92px;               /* room for the bottom menu */
+  --safe-b: env(safe-area-inset-bottom, 0px);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--c-page);
+  color: var(--c-text-2);
+  font-family: var(--font);
+  font-size: var(--fs-md);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  overflow-x: hidden;
+}
+h1, h2, h3, h4 { margin: 0; color: var(--c-text); line-height: 1.35; font-weight: var(--fw-bold); }
+p { margin: 0; }
+a { color: var(--accent); text-decoration: none; }
+img, svg, video { display: block; max-inline-size: 100%; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+[hidden] { display: none !important; }
+:focus-visible { outline: 3px solid color-mix(in srgb, var(--c-brand) 55%, transparent); outline-offset: 2px; }
+::selection { background: var(--c-brand-100); color: var(--c-ink); }
+
+/* — the app column: 360–440 px, centered on a wide screen — */
+.app {
+  position: relative;
+  inline-size: 100%;
+  max-inline-size: var(--app-max);
+  min-block-size: 100vh;
+  min-block-size: 100dvh;
+  margin-inline: auto;
+  background: var(--c-bg);
+  overflow-x: clip;
+}
+.app.theme-admin, .theme-admin { --accent: var(--c-accent-admin); }
+@media (min-width: 480px) {
+  .app { box-shadow: 0 0 0 1px rgba(31, 36, 48, .05), 0 10px 40px rgba(31, 36, 48, .10); }
+}
+.screen {
+  padding-block: var(--sp-4) var(--sp-8);
+  padding-inline: var(--pad-x);
+  min-block-size: 100vh;
+  min-block-size: 100dvh;
+}
+.app.has-nav .screen { padding-block-end: calc(var(--tabbar-h) + var(--sp-6) + var(--safe-b)); }
+.screen--flush { padding-inline: 0; }        /* full column width */
+.screen--gray { background: var(--c-bg); }    /* the same warm background (01, 04) */
+
+/* — utilities — */
+.stack { display: flex; flex-direction: column; gap: var(--sp-4); }
+.stack--sm { gap: var(--sp-2); }
+.stack--lg { gap: var(--sp-6); }
+.cluster { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-2); }
+.spread { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3); }
+.text-center { text-align: center; }
+.muted { color: var(--c-text-3); }
+.small { font-size: var(--fs-sm); }
+.accent { color: var(--accent); }
+.is-green { color: var(--c-green-ink); }
+.is-red { color: var(--c-danger); }
+.ltr { direction: ltr; unicode-bidi: isolate; display: inline-block; }
+.sr-only { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.bleed { margin-inline: calc(-1 * var(--pad-x)); }
+.ic { flex: none; }

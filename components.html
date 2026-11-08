@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="fa-AF" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  <title>PANAH — ui-core components</title>
+  <link rel="icon" href="../img/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../vendor/leaflet/leaflet.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <style>
+    /* for this demo page only */
+    .demo { padding-block-end: 48px; }
+    .demo-h { margin-block: 28px 12px; padding-block-start: 12px; border-block-start: 2px dashed #E3E3E8; font-size: 13px; font-weight: 600; color: #8A8A93; }
+    .demo .tabbar { position: relative; inset: auto; margin-block: 8px; }
+    .demo-icons { display: grid; grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); gap: 6px; }
+    .demo-icons div { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 2px; border-radius: 8px; background: #FAFAFA; color: #333; font-size: 9.5px; direction: ltr; }
+    .demo-fmt { inline-size: 100%; border-collapse: collapse; font-size: 13px; }
+    .demo-fmt td { padding: 4px 6px; border-block-end: 1px solid #EEE; vertical-align: top; }
+    .demo-fmt td:first-child { color: #8A8A93; direction: ltr; text-align: start; white-space: nowrap; }
+    .demo-bar { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+    .demo-hero { display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; }
+    .demo-hero b { font-size: 34px; font-weight: 800; color: #2B2B2B; line-height: 1.1; }
+  </style>
+</head>
+<body>
+  <main id="demo" class="app demo screen" data-demo-inert></main>
+  <script src="../vendor/leaflet/leaflet.js"></script>
+  <script src="../js/core.js"></script>
+  <script src="../js/ui.js"></script>
+  <script src="components.js"></script>
+</body>
+</html>

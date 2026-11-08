@@ -1,0 +1,263 @@
+/* Group "home" — resident screens: home 05/06, alert with map, search 09, videos (like 17), numbers (07 + 08 + 16).
+   Redesign 07.11: white cards on the warm background, tinted icon squares, palette from base.css; logical properties only: English (ltr) flips by itself.
+   Own classes — hm-*; shared ones (banner, card, row, section-title…) — css/components.css. */
+
+/* ---------------------------------------------------------------- header with ← (08): arrow on the left in English too */
+.hm-top {
+  display: grid;
+  grid-template-columns: 44px 1fr 44px;
+  grid-template-areas: "x title back";
+  align-items: center;
+  min-block-size: 48px;
+  margin-block-end: var(--sp-3);
+}
+[dir="ltr"] .hm-top { grid-template-areas: "back title x"; }
+.hm-top__x { grid-area: x; }
+.hm-top__title { grid-area: title; text-align: center; font-size: var(--fs-lg); font-weight: var(--fw-black); color: var(--c-ink); }
+.hm-top__back { grid-area: back; justify-self: center; color: var(--c-ink); }
+
+/* ---------------------------------------------------------------- offline: "آخرین به‌روزرسانی: …" */
+.hm-stale {
+  display: flex; align-items: center; gap: 6px; inline-size: fit-content; max-inline-size: 100%;
+  margin-block: var(--sp-3); padding: 6px 12px; border-radius: var(--r-pill);
+  background: var(--c-warn-soft); border: 1px solid var(--c-warn-line); color: var(--c-warn-ink); font-size: 13px; line-height: 1.5;
+}
+.hm-stale .ic { flex: none; }
+.hm-home .hm-stale, .hm-videos .hm-stale { margin-inline: auto; }
+
+/* ---------------------------------------------------------------- home (05/06) */
+/* search and profile icons — in place of the Figma status bar (94 px down to the banner, as in the frame) */
+.hm-bar { display: flex; align-items: center; justify-content: space-between; min-block-size: 48px; margin-block-end: var(--sp-5); }
+.hm-bar__btn { inline-size: 44px; block-size: 44px; color: var(--c-ink); }
+.hm-home .banner { min-block-size: 108px; }
+.hm-home .banner__title { font-size: 24px; }
+.hm-home a.banner, .hm-alert a.banner { cursor: pointer; }
+.hm-home .banner--danger .banner__text, .hm-alert .banner--danger .banner__text { font-weight: 700; }
+.hm-home .banner--danger { animation: hm-pulse 1.8s ease-in-out infinite; }
+@keyframes hm-pulse {
+  0%, 100% { box-shadow: var(--sh-banner), 0 0 0 0 rgba(217, 45, 32, .40); }
+  50% { box-shadow: var(--sh-banner), 0 0 0 10px rgba(217, 45, 32, 0); }
+}
+@media (prefers-reduced-motion: reduce) { .hm-home .banner--danger { animation: none; } }
+/* "هشدارهای قبلی" — 24 px below the banner, cards from 304 px (05) */
+.hm-home .section-title { margin-block: 28px 12px; }
+.hm-home .section-title h2 { font-size: var(--fs-xl); }
+.hm-past { display: flex; flex-direction: column; gap: var(--sp-3); }
+/* past alert card in place of the gray placeholder: 370×140, radius 28, #CDCDD1 */
+.hm-past__card {
+  display: flex; align-items: flex-start; gap: 14px;
+  min-block-size: 0; padding: 16px;
+  color: var(--c-ink); text-decoration: none;
+  transition: box-shadow .15s, border-color .15s, transform .05s;
+}
+.hm-past__card:hover { border-color: var(--c-line-2); box-shadow: var(--sh-2); }
+.hm-past__card:active { transform: scale(.995); }
+.hm-past__icon {
+  display: grid; place-items: center; flex: none;
+  inline-size: 48px; block-size: 48px; border-radius: 14px;
+  background: var(--c-warn-soft); color: var(--c-warn-ink);
+}
+.hm-past__icon--flood { background: var(--c-info-soft); color: var(--c-info-ink); }
+.hm-past__body { display: flex; flex-direction: column; gap: 3px; min-inline-size: 0; flex: 1; }
+.hm-past__head { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-2); }
+.hm-past__title { font-size: var(--fs-lg); font-weight: var(--fw-black); color: var(--c-ink); line-height: 1.4; }
+.hm-mag {
+  flex: none; padding: 1px 10px; border-radius: var(--r-pill);
+  background: var(--c-warn-soft); color: var(--c-warn-ink); font-size: 13px; font-weight: var(--fw-bold); white-space: nowrap;
+}
+.hm-past__place { font-size: var(--fs-md); color: var(--c-ink-2); line-height: 1.5; overflow-wrap: anywhere; }
+.hm-past__meta { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--c-ink-3); }
+.hm-past__meta .ic { color: var(--c-ink-3); }
+
+/* ---------------------------------------------------------------- alert with a map (like 05 and 15) */
+.hm-alert .banner { min-block-size: 96px; }
+.banner.hm-banner--ended { --banner-bg: var(--c-sunken); --banner-line: var(--c-line-2); --banner-stripe: #8B919D; --banner-ink: var(--c-ink-2); box-shadow: none; }
+.hm-map { block-size: 260px; margin-block: var(--sp-4) var(--sp-2); }
+.hm-legend { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: var(--fs-sm); color: var(--c-ink-2); margin-block-end: var(--sp-4); padding-inline: var(--sp-1); }
+.hm-legend > span { display: inline-flex; align-items: center; gap: 6px; }
+.hm-legend__dot { display: inline-block; inline-size: 10px; block-size: 10px; border-radius: 50%; }
+.hm-info { display: flex; flex-direction: column; padding-block: var(--sp-2); }
+.hm-info__row { display: flex; align-items: flex-start; gap: var(--sp-3); padding-block: 10px; }
+.hm-info__row + .hm-info__row { border-block-start: 1px solid var(--c-line); }
+.hm-info__icon { display: grid; place-items: center; flex: none; inline-size: 40px; block-size: 40px; border-radius: var(--r-md); background: var(--c-brand-50); color: var(--c-brand-700); }
+.hm-info__body { display: flex; flex-direction: column; gap: 2px; min-inline-size: 0; flex: 1; }
+.hm-info__label { font-size: var(--fs-sm); color: var(--c-text-3); }
+.hm-info__value { font-size: 16px; font-weight: var(--fw-bold); color: var(--c-ink); overflow-wrap: anywhere; line-height: 1.5; }
+.hm-info__sub { font-size: var(--fs-sm); color: var(--c-text-2); }
+.hm-info .hm-route, .hm-info .hm-link { align-self: flex-start; margin-block-start: 6px; }
+.hm-route {
+  display: inline-flex; align-items: center; gap: 6px; flex: none;
+  min-block-size: 40px; padding: 4px 16px; border: 1.5px solid var(--c-brand-600); border-radius: var(--r-pill);
+  color: var(--c-brand-700); font-size: 14px; font-weight: var(--fw-bold); text-decoration: none; background: var(--c-surface);
+}
+.hm-route:hover { background: var(--c-brand-50); }
+.hm-link { color: var(--c-info-ink); font-size: 14px; text-decoration: underline; }
+.hm-h2 { font-size: var(--fs-lg); font-weight: var(--fw-black); color: var(--c-ink); margin-block: var(--sp-6) var(--sp-3); }
+.hm-places { display: flex; flex-direction: column; padding-block: var(--sp-1); }
+.hm-place { display: flex; align-items: center; gap: var(--sp-3); padding-block: 10px; }
+.hm-place + .hm-place { border-block-start: 1px solid var(--c-line); }
+.hm-place__icon { flex: none; color: var(--c-safe-600); }
+.hm-place__body { display: flex; flex-direction: column; min-inline-size: 0; flex: 1; }
+.hm-place__name { font-weight: 600; color: var(--c-text); overflow-wrap: anywhere; }
+.hm-place__sub { font-size: var(--fs-sm); color: var(--c-text-3); overflow-wrap: anywhere; }
+.hm-figure { margin: 0; margin-block-start: var(--sp-6); }
+.hm-figure img { inline-size: 100%; border-radius: var(--r-lg); }
+
+/* ---------------------------------------------------------------- search (09): bar #ECE6F0, 56 px, 26 px margins */
+.hm-search { padding-block-start: 21px; }
+.hm-sbar {
+  display: flex; align-items: center; gap: 0;
+  min-block-size: 56px; padding-inline: 8px;
+  margin-inline: calc(26px - var(--pad-x));
+  border-radius: 28px; background: var(--c-surface); border: 1.5px solid var(--c-line); box-shadow: var(--sh-1);
+}
+.hm-sbar:focus-within { border-color: var(--c-brand); box-shadow: var(--ring); }
+.hm-sbar__btn { display: grid; place-items: center; flex: none; inline-size: 44px; block-size: 44px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: var(--c-ink-2); }
+.hm-sbar__btn:hover { background: var(--c-sunken); }
+.hm-sbar__input {
+  flex: 1; min-inline-size: 0; block-size: 48px; padding-inline: 4px;
+  border: 0; outline: none; background: transparent;
+  color: var(--c-ink); font-size: 16px; caret-color: var(--c-brand-600);
+}
+.hm-sbar__input::placeholder { color: var(--c-hint); opacity: 1; }
+.hm-results { margin-inline: calc(26px - var(--pad-x)); padding-block: var(--sp-2); }
+.hm-hint { color: var(--c-text-3); font-size: var(--fs-sm); text-align: center; padding-block: var(--sp-6); }
+.hm-group + .hm-group { margin-block-start: var(--sp-2); }
+.hm-group__title { font-size: 13px; font-weight: var(--fw-bold); color: var(--c-ink-3); padding-block: var(--sp-3) 0; padding-inline: 16px; }
+/* rows as in 09 (Material 3): 40 px circle, 16 px label, 14 px second line */
+.hm-row { padding-inline: 16px; }
+.hm-row { border-radius: var(--r-md); }
+.hm-row:hover { background: var(--c-surface); }
+.hm-row .row__icon { background: var(--c-brand-50); color: var(--c-brand-700); }
+.hm-row .row__title { color: var(--c-ink); font-size: 16px; line-height: 1.5; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hm-row .row__sub { color: var(--c-ink-3); font-size: 14px; }
+/* narrow phones (below 440 px): a long result line is cut inside its own box, so its text never reaches past the
+   screen edge (shots-v4 at 360 px: a <bdi> at −2 px); 440 px and wider stay exactly as before */
+@media (max-width: 439.98px) {
+  .hm-row .row__title > bdi, .hm-row .row__sub > bdi {
+    display: inline-block; max-inline-size: 100%; overflow: hidden; text-overflow: ellipsis; vertical-align: top;
+  }
+}
+
+/* ---------------------------------------------------------------- videos (like 17, without ✎ and 🗑) */
+.hm-vlist { display: flex; flex-direction: column; gap: var(--sp-3); }
+.hm-vcard {
+  display: flex; align-items: center; gap: 14px;
+  min-block-size: 112px; padding: 12px; padding-inline-start: 16px;
+  background: var(--c-surface); border: 1px solid var(--c-line); border-radius: var(--r-lg);
+  color: var(--c-ink); text-decoration: none; box-shadow: var(--sh-1);
+  transition: box-shadow .15s, border-color .15s;
+}
+.hm-vcard:hover { border-color: var(--c-line-2); box-shadow: var(--sh-2); }
+.hm-vcard__body { display: flex; flex-direction: column; gap: 8px; min-inline-size: 0; flex: 1; }
+.hm-vcard__title { font-size: 16px; font-weight: var(--fw-black); color: var(--c-ink); line-height: 1.5; overflow-wrap: anywhere; }
+.hm-vcard__date { font-size: 13px; color: var(--c-ink-3); }
+.hm-thumb {
+  position: relative; flex: none; overflow: hidden;
+  display: grid; place-items: center;
+  inline-size: 118px; block-size: 84px; border-radius: var(--r-md); background: var(--c-sunken);
+}
+/* hqdefault.jpg is 4:3 with black bars around the 16:9 frame: scale it up so that the bars disappear */
+.hm-thumb img { position: absolute; inset: 0; inline-size: 100%; block-size: 100%; max-inline-size: none; object-fit: cover; transform: scale(1.25); }
+.hm-play { position: relative; display: grid; place-items: center; inline-size: 38px; block-size: 38px; border-radius: 50%; background: var(--c-brand-600); color: #fff; box-shadow: 0 2px 8px rgba(31, 36, 48, .25); }
+.hm-play .ic { margin-inline-start: 2px; }
+.hm-thumb img + .hm-play { background: rgba(212, 64, 12, .92); }
+[dir="rtl"] .hm-play .ic { margin-inline: 0 2px; }
+
+.hm-player { position: relative; aspect-ratio: 16 / 9; overflow: hidden; border-radius: var(--r-lg); background: #111; }
+.hm-player iframe, .hm-player video { position: absolute; inset: 0; inline-size: 100%; block-size: 100%; max-inline-size: none; border: 0; }
+.hm-player--none { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--sp-3); background: var(--c-sunken); color: var(--c-ink-2); font-weight: var(--fw-semi); }
+.hm-player--none .hm-play { inline-size: 56px; block-size: 56px; }
+.hm-video__title { font-size: var(--fs-xl); font-weight: var(--fw-black); color: var(--c-ink); margin-block: var(--sp-4) var(--sp-2); overflow-wrap: anywhere; }
+.hm-video__meta { display: flex; align-items: center; gap: 6px; color: var(--c-ink-3); font-size: 14px; }
+
+/* ---------------------------------------------------------------- numbers (07 + 08 + 16) */
+.hm-lead { font-size: var(--fs-lg); font-weight: var(--fw-medium); line-height: 1.75; color: var(--c-ink); margin-block: var(--sp-2) var(--sp-4); }
+.hm-divider { border: 0; border-block-start: 1px solid var(--c-line-2); margin-block: 0 var(--sp-5); margin-inline: 0; }
+.hm-nums { display: flex; flex-direction: column; gap: var(--sp-3); }
+.hm-num {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3);
+  min-block-size: 84px; padding-block: 12px; padding-inline: 20px 14px;
+  background: var(--c-surface); border: 1px solid var(--c-line); border-inline-start: 5px solid var(--c-safe); border-radius: var(--r-lg);
+  color: var(--c-ink); text-decoration: none; box-shadow: var(--sh-1);
+  transition: box-shadow .15s, transform .05s;
+}
+.hm-num:hover { box-shadow: var(--sh-2); }
+.hm-num:active { transform: scale(.995); }
+.hm-num__body { display: flex; flex-direction: column; min-inline-size: 0; }
+.hm-num__n { font-size: 28px; line-height: 1.25; font-weight: var(--fw-black); color: var(--c-ink); }
+.hm-num__t { font-size: var(--fs-md); color: var(--c-ink-3); overflow-wrap: anywhere; }
+.hm-num__call { display: grid; place-items: center; flex: none; inline-size: 52px; block-size: 52px; border-radius: 50%; background: var(--c-safe-600); color: #fff; box-shadow: 0 6px 14px rgba(21, 128, 61, .28); }
+
+/* ---------------------------------------------------------------- a new alert on any resident screen (top of the column) */
+.hm-flash {
+  position: fixed; z-index: 2600;
+  inset-block-start: calc(10px + env(safe-area-inset-top, 0px)); inset-inline: 0;
+  margin-inline: auto; inline-size: calc(100% - 24px); max-inline-size: calc(var(--app-max) - 24px);
+  display: flex; align-items: center; gap: 2px;
+  border-radius: var(--r-lg); box-shadow: var(--sh-2);
+  border: 1px solid var(--c-warn-line); border-inline-start: 6px solid var(--c-warn);
+  animation: hm-flash-in .25s ease-out;
+}
+.hm-flash--alert { background: var(--c-warn-soft); color: var(--c-warn-ink); }
+.hm-flash--danger { background: #FDECEA; color: var(--c-danger-ink); border-color: var(--c-danger-line); border-inline-start-color: var(--c-danger); animation: hm-flash-in .25s ease-out, hm-pulse 1.8s ease-in-out .25s infinite; }
+.hm-flash__body { display: flex; align-items: center; gap: 12px; flex: 1; min-inline-size: 0; padding: 12px 14px; color: inherit; text-decoration: none; }
+.hm-flash__icon { display: grid; place-items: center; flex: none; inline-size: 42px; block-size: 42px; border-radius: 50%; background: var(--c-warn); color: #fff; }
+.hm-flash--danger .hm-flash__icon { background: var(--c-danger); color: #fff; }
+.hm-flash__text { display: flex; flex-direction: column; min-inline-size: 0; line-height: 1.4; }
+.hm-flash__text strong { font-size: 17px; font-weight: 800; }
+.hm-flash__text span { font-size: 14px; overflow-wrap: anywhere; }
+.hm-flash--danger .hm-flash__text span { font-weight: 700; }
+.hm-flash__close { display: grid; place-items: center; flex: none; inline-size: 40px; block-size: 40px; margin-inline-end: 6px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: inherit; }
+.hm-flash__close:hover { background: rgba(0, 0, 0, .08); }
+@keyframes hm-flash-in { from { transform: translateY(-12px); opacity: 0; } to { transform: none; opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .hm-flash, .hm-flash--danger { animation: none; } }
+
+/* ---------------------------------------------------------------- my location: search, GPS, map */
+.hm-locask { display: flex; flex-direction: column; gap: var(--sp-2); margin-block-start: var(--sp-4); border-color: var(--c-brand-100); border-inline-start: 5px solid var(--c-brand); background: var(--c-surface); }
+.hm-locask__title { display: flex; align-items: center; gap: var(--sp-2); font-weight: 700; color: var(--c-text); }
+.hm-locask__title .ic { color: var(--c-brand-700); }
+.hm-locask__why { font-size: var(--fs-sm); color: var(--c-text-2); }
+.hm-locask__btns { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+.hm-locbox { display: flex; flex-direction: column; gap: var(--sp-2); }
+.hm-locsearch { display: flex; gap: var(--sp-2); }
+.hm-locsearch .input { flex: 1; min-inline-size: 0; min-block-size: 44px; }
+.hm-locsearch .btn { flex: none; }
+.hm-locresults { display: flex; flex-direction: column; }
+.hm-locrow {
+  display: flex; align-items: flex-start; gap: var(--sp-2); inline-size: 100%;
+  padding: 8px 6px; border: 0; border-block-end: 1px solid var(--c-line); background: transparent;
+  color: var(--c-text); text-align: start; cursor: pointer;
+}
+.hm-locrow:hover { background: var(--c-brand-50); }
+.hm-locrow .ic { flex: none; margin-block-start: 2px; color: var(--c-brand-700); }
+.hm-locrow__text { display: flex; flex-direction: column; min-inline-size: 0; }
+.hm-locrow__name { font-weight: 600; overflow-wrap: anywhere; }
+.hm-locrow__full { font-size: var(--fs-xs); color: var(--c-text-3); overflow-wrap: anywhere; }
+.hm-locmsg { font-size: var(--fs-sm); color: var(--c-text-2); padding-block: 6px; }
+/* map with its own "me" button (alert screen); the wrapper is dir="ltr" like the Leaflet map, so the button stays
+   top-right, away from Leaflet's zoom buttons (top-left), in every language */
+.hm-mapwrap { position: relative; }
+.hm-mapbtn {
+  position: absolute; z-index: 2; inset-block-start: 10px; inset-inline-end: 10px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  min-inline-size: 40px; min-block-size: 40px; padding: 6px; border: 0; border-radius: var(--r-pill);
+  background: var(--c-surface); color: var(--c-info-ink); box-shadow: var(--sh-2); cursor: pointer;
+}
+.hm-mapbtn--big {
+  inset-block: auto 22px; inset-inline: 0; margin-inline: auto; inline-size: fit-content; max-inline-size: calc(100% - 24px);
+  padding: 10px 18px; background: var(--c-info); color: #fff; font-weight: var(--fw-bold); font-size: 15px;
+}
+.hm-legend__dot--me { background: #1E6FD9; box-shadow: 0 0 0 3px rgba(30, 111, 217, .25); }
+/* "you" on the map: blue dot, halo, label «شما» (inside the Leaflet map, which is always dir="ltr") */
+.hm-me { position: relative; }
+.hm-me__dot { position: absolute; inset: 2px; border-radius: 50%; background: #1E6FD9; border: 3px solid #fff; box-shadow: 0 1px 4px rgba(0, 0, 0, .35); }
+.hm-me__halo { position: absolute; inset: -8px; border-radius: 50%; background: rgba(30, 111, 217, .25); animation: hm-me-pulse 2s ease-out infinite; }
+.hm-me__label {
+  position: absolute; inset-block-start: 24px; inset-inline-start: 50%; transform: translateX(-50%);
+  padding: 1px 8px; border-radius: var(--r-pill); background: #1E6FD9; color: #fff;
+  font-family: var(--font); font-size: 12px; font-weight: 700; line-height: 1.6; white-space: nowrap;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .3);
+}
+@keyframes hm-me-pulse { from { transform: scale(.6); opacity: .9; } to { transform: scale(1.6); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .hm-me__halo { animation: none; } }

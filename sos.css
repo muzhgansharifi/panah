@@ -1,0 +1,183 @@
+/* Group "sos" (SOS: 10, 11/13, 12): its screens' styles. Shared colors and components — css/base.css, css/components.css.
+   Logical properties only: in English (dir="ltr") the layout flips by itself. Colors — the palette in base.css (redesign 07.11). */
+
+.sos-screen { padding-inline: 16px; }
+.sos-screen .is-red { color: var(--c-danger); }
+.sos-go-chat { margin-block-start: var(--sp-5); }
+
+/* ---------------------------------------------------------------- 10: countdown before sending (not in Figma) */
+.sos-count {
+  display: flex; flex-direction: column; align-items: center; gap: var(--sp-3);
+  padding-block: 9vh var(--sp-6); text-align: center;
+}
+.sos-count h1 { color: var(--c-danger-ink); font-size: var(--fs-3xl); font-weight: var(--fw-black); }
+.sos-count__ring {
+  display: grid; place-items: center;
+  inline-size: 144px; block-size: 144px; margin-block-end: var(--sp-6);
+  border-radius: 50%; background: var(--c-danger); color: #fff;
+  font-size: 64px; font-weight: 800; line-height: 1;
+  box-shadow: 0 0 0 14px #FCDCD8, 0 0 0 28px var(--c-danger-soft), 0 12px 40px rgba(217, 45, 32, .35);
+  animation: sos-pulse 1s ease-in-out infinite;
+}
+.sos-count__ring.is-busy { background: var(--c-danger-soft); box-shadow: none; animation: none; }
+.sos-count__ring .spinner { inline-size: 54px; block-size: 54px; border-width: 5px; border-block-start-color: var(--c-danger); }
+.sos-count__text { font-size: var(--fs-lg); font-weight: var(--fw-semi); color: var(--c-ink); }
+.sos-count__btns { inline-size: 100%; margin-block-start: var(--sp-4); }
+@keyframes sos-pulse { 50% { transform: scale(1.05); } }
+@media (prefers-reduced-motion: reduce) { .sos-count__ring { animation: none; } }
+
+/* ---------------------------------------------------------------- 10: the "ارسال‌شده" card */
+.sos-card {
+  background: var(--c-surface); border: 1px solid var(--c-line); border-radius: var(--r-lg);
+  overflow: hidden; margin-block-start: var(--sp-2); box-shadow: var(--sh-1);
+}
+.sos-card__top {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--sp-2);
+  min-block-size: 40px; padding: 6px 14px;
+  background: var(--c-danger-soft); border-block-end: 1px solid var(--c-danger-line);
+  font-size: var(--fs-sm);
+}
+.sos-card__stamp { color: var(--c-ink-3); }
+.sos-card__sent { display: inline-flex; align-items: center; gap: 10px; color: var(--c-danger-ink); font-weight: var(--fw-bold); font-size: var(--fs-md); }
+.sos-card__hero {
+  display: flex; align-items: center; justify-content: center; gap: clamp(16px, 9vw, 44px);
+  padding: 22px 16px 20px; margin-inline: 16px;
+  border-block-end: 1px solid var(--c-line);
+}
+.sos-card__intro { display: flex; flex-direction: column; gap: 6px; min-inline-size: 0; text-align: end; }
+.sos-card__intro h1 { color: var(--c-danger-ink); font-size: 24px; font-weight: var(--fw-black); }
+.sos-card__intro p { color: var(--c-ink-2); font-size: var(--fs-md); line-height: 1.9; max-inline-size: 17em; }
+.sos-card__siren {
+  display: grid; place-items: center; flex: none;
+  inline-size: 76px; block-size: 76px; border-radius: 22px; background: var(--c-danger-soft);
+}
+.sos-card__body { display: flex; flex-direction: column; gap: 10px; padding: 14px 16px 16px; }
+/* rows in 10: icon to the left of the text, as in the screenshot (in Dari — at the end of the line) */
+.sos-label, .sos-row, .sos-note, .sos-please {
+  display: flex; align-items: center; justify-content: flex-end; gap: 10px; text-align: end;
+}
+.sos-label { font-size: var(--fs-md); font-weight: var(--fw-bold); color: var(--c-ink); flex-direction: row; }
+.sos-label .ic { color: var(--c-ink-2); }
+.sos-label .ic.is-red { color: var(--c-danger); }
+.sos-locbox {
+  display: flex; flex-direction: column; gap: 6px;
+  padding: 10px 14px; border: 1px solid var(--c-danger-line); border-radius: var(--r-md); background: #FFF9F8;
+  font-size: var(--fs-md); color: var(--c-ink);
+}
+.sos-locbox hr { inline-size: 100%; margin: 2px 0; border: 0; border-block-start: 1px solid var(--c-danger-line); }
+.sos-row { min-block-size: 30px; }
+.sos-row--top { align-items: flex-start; }
+.sos-row--top > .is-red { padding-block-start: 3px; }
+.sos-num { margin-inline-start: 6px; }
+.sos-place { display: flex; flex-direction: column; align-items: flex-end; line-height: 1.8; }
+.sos-place b { font-weight: 500; }
+.sos-locbox .btn { align-self: flex-end; inline-size: auto; }
+.sos-when { color: var(--c-ink-2); font-size: var(--fs-sm); text-align: end; margin-block-start: -6px; }
+.sos-note { align-items: flex-start; color: var(--c-ink-2); font-size: 14.5px; line-height: 1.9; }
+.sos-note p { flex: 1; min-inline-size: 0; }
+.sos-note .ic { color: var(--c-ink-2); margin-block-start: 3px; }
+.sos-please {
+  justify-content: flex-end; min-block-size: 54px; padding: 10px 16px;
+  border: 1px solid var(--c-danger-line); border-inline-start: 5px solid var(--c-danger); border-radius: var(--r-md); background: var(--c-danger-soft);
+  color: var(--c-danger-ink); font-size: 17px; font-weight: var(--fw-bold);
+}
+.sos-please__hands { font-size: 22px; line-height: 1; }
+.sos-card__status {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3); flex-wrap: wrap;
+  padding: 12px 16px; border-block-start: 1px solid var(--c-line);
+}
+.sos-ok { display: inline-flex; align-items: center; gap: 8px; color: var(--c-safe-600); font-size: var(--fs-md); font-weight: var(--fw-semi); order: 2; }
+.sos-dev { display: inline-flex; align-items: center; gap: 14px; color: var(--c-green-ink); direction: ltr; }
+.sos-dev__item { display: inline-flex; align-items: center; gap: 6px; color: var(--c-green-ink); }
+.sos-dev__item span { color: var(--c-ink-2); font-size: var(--fs-md); }
+
+/* the "موقعیت زنده در حال اشتراک" strip (10, 12) */
+.sos-live {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3);
+  margin-block-start: var(--sp-4); padding: 14px 16px;
+  background: var(--c-safe-soft); border: 1px solid var(--c-safe-line); border-inline-start: 5px solid var(--c-safe); border-radius: var(--r-md);
+}
+.sos-live__art { flex: none; display: inline-flex; }
+.sos-live__lines { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; min-inline-size: 0; }
+.sos-live__lines p { display: flex; align-items: center; gap: 10px; color: var(--c-ink-2); font-size: var(--fs-md); text-align: end; }
+.sos-live__lines p:first-child { font-weight: var(--fw-bold); color: var(--c-ink); }
+.sos-live__lines .ic { color: var(--c-ink-2); }
+.sos-live.is-off { background: var(--c-sunken); border-color: var(--c-line); border-inline-start-color: #8B919D; }
+.sos-live.is-off .live-dot { background: #A3A8B2; box-shadow: none; }
+.sos-live.is-off .sos-live__art { filter: grayscale(1); opacity: .6; }
+
+/* ---------------------------------------------------------------- 12: "پیام ارسال شد!" — neatly aligned blocks */
+.sos-done {
+  display: flex; align-items: center; justify-content: center; gap: var(--sp-4);
+  margin-block: var(--sp-6) var(--sp-4);
+  color: var(--c-safe-600); font-size: var(--fs-2xl); font-weight: var(--fw-black);
+}
+.sos-share {
+  display: flex; flex-direction: column; gap: var(--sp-4);
+  padding: var(--sp-4); border: 1px solid var(--c-line); border-radius: var(--r-lg); background: var(--c-surface); box-shadow: var(--sh-1);
+}
+.sos-share__head { display: flex; align-items: center; gap: var(--sp-3); }
+.sos-share__head p { flex: 1; min-inline-size: 0; color: var(--c-ink); font-size: var(--fs-lg); font-weight: var(--fw-bold); line-height: 1.8; }
+.sos-share__art { flex: none; display: inline-flex; }
+.sos-share__rows { list-style: none; margin: 0; padding: 0 var(--sp-3); border: 1px solid var(--c-line); border-radius: var(--r-md); background: var(--c-sunken); }
+.sos-share__rows li { display: flex; align-items: center; gap: var(--sp-3); min-block-size: 52px; color: var(--c-ink); font-size: var(--fs-md); }
+.sos-share__rows li + li { border-block-start: 1px solid var(--c-line); }
+.sos-share__rows .ic { color: var(--c-safe-600); }
+.sos-auto {
+  display: flex; align-items: center; gap: var(--sp-3);
+  margin-block-start: var(--sp-4); padding: var(--sp-4);
+  background: var(--c-info-soft); border: 1px solid var(--c-info-line); border-inline-start: 5px solid var(--c-info); border-radius: var(--r-lg);
+}
+.sos-auto__main { flex: 1; min-inline-size: 0; display: flex; flex-direction: column; gap: var(--sp-2); }
+.sos-auto h2 { display: flex; align-items: center; gap: var(--sp-2); color: var(--c-info-ink); font-size: var(--fs-lg); font-weight: var(--fw-bold); }
+.sos-auto h2 svg { flex: none; }
+.sos-auto p { color: var(--c-ink); font-size: var(--fs-md); line-height: 2; }
+.sos-auto__art { flex: none; display: inline-flex; }
+
+/* ---------------------------------------------------------------- 11/13: chat */
+.sos-chat { padding-block-end: calc(96px + var(--safe-b)); }
+.sos-chat__head { position: sticky; inset-block-start: 0; z-index: 5; margin-inline: -16px; padding-inline: 8px; background: rgba(255, 255, 255, .94); border-block-end: 1px solid var(--c-line); box-shadow: 0 4px 16px rgba(31, 36, 48, .05); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+.sos-chat__head .hdr__title { font-size: var(--fs-md); }
+.sos-chat__sos {
+  display: inline-grid; place-items: center; inline-size: 42px; block-size: 42px; border-radius: 50%;
+  background: var(--c-danger); color: #fff; font-size: 12px; font-weight: var(--fw-black); letter-spacing: .3px;
+  box-shadow: 0 0 0 4px #FCDCD8, 0 4px 12px rgba(217, 45, 32, .3);
+}
+.sos-chat__list { padding-block-start: var(--sp-3); }
+.sos-chat .msg--out { min-inline-size: min(78%, 330px); }
+.sos-chat .msg--in { min-inline-size: min(74%, 320px); }
+.sos-chat .msg--in.msg--loc .msg__body { flex: 1; }
+.sos-chat .msg--in:not(.msg--loc) .msg__body { flex: 1; }
+.sos-q::before { content: '"'; }
+.sos-q::after { content: '"'; }
+.sos-meanwhile { display: block; margin-block-start: var(--sp-2); }
+.sos-direct { display: flex; flex-direction: column; gap: 2px; padding-block-start: var(--sp-2); border-block-start: 1px solid var(--c-line); color: var(--c-ink); }
+.sos-direct__tel { display: inline-flex; align-items: center; gap: var(--sp-3); color: var(--c-ink); font-size: var(--fs-lg); font-weight: var(--fw-bold); }
+.sos-direct__tel .ic { color: var(--c-safe-600); }
+.sos-sign { color: var(--c-ink-3); }
+.sos-hint {
+  display: flex; flex-direction: column; align-items: center; gap: var(--sp-3);
+  margin-block-start: 12vh; padding: var(--sp-5); text-align: center; color: var(--c-text-3);
+}
+.sos-hint .ic { color: var(--c-brand-700); }
+.sos-closed {
+  display: flex; flex-direction: column; gap: var(--sp-3);
+  margin-block-start: var(--sp-5); padding: var(--sp-4);
+  border: 1px solid var(--c-line); border-radius: var(--r-lg); background: var(--c-surface); box-shadow: var(--sh-1);
+}
+.sos-closed__title { display: flex; align-items: center; gap: var(--sp-2); color: var(--c-ink); font-weight: var(--fw-bold); }
+.sos-closed__title .ic { color: var(--c-text-3); }
+.sos-img { display: block; margin-block-start: 2px; }
+.sos-img img { max-inline-size: min(100%, 240px); max-block-size: 260px; border-radius: var(--r-md); border: 1px solid var(--c-line); object-fit: cover; }
+
+/* ---------------------------------------------------------------- offline: queue and call 119 */
+.sos-offline {
+  display: flex; flex-direction: column; gap: var(--sp-3); inline-size: 100%;
+  padding: var(--sp-4); border: 1px solid var(--c-danger-line); border-inline-start: 5px solid var(--c-danger); border-radius: var(--r-lg); background: var(--c-danger-soft); text-align: start;
+}
+.sos-offline__text { display: flex; align-items: flex-start; gap: var(--sp-2); color: var(--c-danger-ink); font-weight: var(--fw-semi); line-height: 1.8; }
+.sos-offline__text .ic { flex: none; margin-block-start: 4px; }
+.sos-offline__call { min-block-size: 60px; font-size: 19px; font-weight: 700; }
+body.is-offline .sos-chat__head { inset-block-start: calc(32px + env(safe-area-inset-top, 0px)); } /* below the core's "بدون اتصال" strip */
+.sos-count__ring.is-wait { background: var(--c-danger-soft); color: var(--c-danger-ink); box-shadow: none; animation: none; }
+.sos-queued { display: inline-flex; align-items: center; gap: 6px; color: var(--c-warn-ink); }
